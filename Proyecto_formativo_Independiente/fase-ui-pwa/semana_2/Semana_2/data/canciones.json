@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "titulo": "Vivir mi vida",
+    "artista": "Marc Anthony",
+    "genero": "Salsa",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 2,
+    "titulo": "La camisa negra",
+    "artista": "Juanes",
+    "genero": "Pop latino",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 3,
+    "titulo": "Bailando",
+    "artista": "Enrique Iglesias",
+    "genero": "Pop",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 4,
+    "titulo": "Color esperanza",
+    "artista": "Diego Torres",
+    "genero": "Pop latino",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 5,
+    "titulo": "De música ligera",
+    "artista": "Soda Stereo",
+    "genero": "Rock",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 6,
+    "titulo": "Lamento boliviano",
+    "artista": "Enanitos Verdes",
+    "genero": "Rock",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 7,
+    "titulo": "Rayando el sol",
+    "artista": "Maná",
+    "genero": "Rock latino",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 8,
+    "titulo": "Robarte un beso",
+    "artista": "Carlos Vives y Sebastián Yatra",
+    "genero": "Vallenato pop",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 9,
+    "titulo": "Tacones rojos",
+    "artista": "Sebastián Yatra",
+    "genero": "Pop",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 10,
+    "titulo": "Besos en guerra",
+    "artista": "Morat y Juanes",
+    "genero": "Pop",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 11,
+    "titulo": "Cómo te atreves",
+    "artista": "Morat",
+    "genero": "Pop",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 12,
+    "titulo": "Limón y sal",
+    "artista": "Julieta Venegas",
+    "genero": "Pop",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 13,
+    "titulo": "Eres",
+    "artista": "Café Tacvba",
+    "genero": "Rock alternativo",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 14,
+    "titulo": "Ojos color sol",
+    "artista": "Calle 13 y Silvio Rodríguez",
+    "genero": "Fusión",
+    "portada": "assets/portada-musica.svg"
+  },
+  {
+    "id": 15,
+    "titulo": "No se va",
+    "artista": "Morat",
+    "genero": "Pop",
+    "portada": "assets/portada-musica.svg"
+  }
+]

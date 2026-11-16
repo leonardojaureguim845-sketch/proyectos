@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#18251f">
+  <meta name="description" content="Jáuregui Catering & Eventos. Servicio gastronómico para celebraciones privadas en La Paz, Bolivia.">
+  <title>Jáuregui Catering & Eventos | Catálogo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Jáuregui Catering, inicio">
+        <span class="brand-mark">J<span>+</span></span>
+        <span class="brand-copy"><strong>JÁUREGUI</strong><small>CATERING & EVENTOS</small></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="main-nav" id="mainNav">
+        <a href="#inicio" class="nav-link active">Inicio</a>
+        <a href="#catalogo" class="nav-link">Catálogo</a>
+        <a href="#servicios" class="nav-link">Servicios</a>
+        <a href="#contacto" class="nav-link">Contacto</a>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">◐</button>
+        <button class="quote-top" data-open-quote>Solicitar cotización <span>↗</span></button>
+      </div>
+    </header>
+
+    <main id="inicio">
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow"><i></i> SABORES QUE REÚNEN</span>
+          <h1>Tu celebración,<br><em>con sabor</em> inolvidable.</h1>
+          <p>Gastronomía para fiestas privadas y eventos especiales en La Paz. Elegimos contigo el menú ideal para cada ocasión.</p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="#catalogo">Explorar platos <span>→</span></a>
+            <button class="btn-quiet" data-open-quote>Planificar mi evento</button>
+          </div>
+          <div class="hero-proof"><span class="proof-avatars">J · F</span><span><strong>Javier y Felipe Jáuregui</strong><small>Atención personalizada para tu evento</small></span></div>
+        </div>
+        <div class="hero-visual">
+          <img src="assets/platos/pique-macho.webp" alt="Pique macho boliviano servido en plato" fetchpriority="high">
+          <div class="hero-note"><span class="note-icon">✦</span><span><strong>Momentos especiales</strong><small>Menús hechos para compartir</small></span></div>
+          <span class="hero-stamp">LA PAZ · BOLIVIA</span>
+        </div>
+      </section>
+
+      <section class="catalog-section" id="catalogo">
+        <div class="section-heading">
+          <div><span class="eyebrow">NUESTRO CATÁLOGO</span><h2>Platos para compartir</h2></div>
+          <div class="catalog-tools">
+            <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Buscar un plato..." aria-label="Buscar platos"></label>
+            <button class="filter-fav" id="showFavorites" aria-pressed="false">♡ Favoritos</button>
+          </div>
+        </div>
+
+        <div class="live-practice" id="liveContainer">
+          <div class="live-title"><span class="live-dot"></span><strong>MENÚ DESTACADO EN VIVO</strong><small>Prueba de interacción · Día 1</small></div>
+          <div class="live-offers">
+            <button class="live-offer" data-prod="Pique macho destacado">♡ Pique macho</button>
+            <button class="live-offer" data-prod="Silpancho destacado">♡ Silpancho</button>
+            <button class="live-offer" data-prod="Sajta de pollo destacada">♡ Sajta de pollo</button>
+            <button class="live-like" data-action="like">♥ Me gusta</button>
+          </div>
+          <label class="live-chat-label" for="chatInput">Comentario al equipo</label>
+          <input id="chatInput" class="live-chat" type="text" maxlength="120" placeholder="Escribe una consulta sobre el menú...">
+        </div>
+
+        <div class="catalog-bar">
+          <div class="filter-list" id="categoryFilters">
+            <button class="filter-chip selected" data-filter="todos">Todos</button>
+            <button class="filter-chip" data-filter="tradicional">Tradicionales</button>
+            <button class="filter-chip" data-filter="criollo">Criollos</button>
+            <button class="filter-chip" data-filter="especial">Especiales</button>
+          </div>
+          <span class="result-count" id="resultCount">8 opciones</span>
+        </div>
+        <div class="dish-grid" id="dishGrid">
+          <article class="dish-card" data-category="tradicional" data-name="pique macho" data-price="48" data-dish="Pique macho">
+            <div class="dish-image"><img loading="lazy" src="assets/platos/pique-macho.webp" alt="Plato de carne preparado"><span class="dish-tag">Favorito</span><button class="heart-btn" aria-label="Agregar Pique macho a favoritos" data-favorite="Pique macho">♡</button></div>
+            <div class="dish-info"><div><h3>Pique macho</h3><p>Carne, salchicha, papa y locoto.</p></div><div class="dish-bottom"><strong>Desde Bs 48</strong><button class="add-dish" data-add="Pique macho">Agregar +</button></div></div>
+          </article>
+          <article class="dish-card" data-category="tradicional" data-name="silpancho" data-price="42" data-dish="Silpancho">
+            <div class="dish-image"><img loading="lazy" src="assets/platos/silpancho.webp" alt="Plato preparado con acompañamientos"><button class="heart-btn" aria-label="Agregar Silpancho a favoritos" data-favorite="Silpancho">♡</button></div>
+            <div class="dish-info"><div><h3>Silpancho</h3><p>Carne apanada, arroz, papa y huevo.</p></div><div class="dish-bottom"><strong>Desde Bs 42</strong><button class="add-dish" data-add="Silpancho">Agregar +</button></div></div>
+          </article>
+          <article class="dish-card" data-category="criollo" data-name="sajta de pollo" data-price="38" data-dish="Sajta de pollo">
+            <div class="dish-image"><img loading="lazy" src="assets/platos/sajta-de-pollo.webp" alt="Preparación de pollo"><button class="heart-btn" aria-label="Agregar Sajta de pollo a favoritos" data-favorite="Sajta de pollo">♡</button></div>
+            <div class="dish-info"><div><h3>Sajta de pollo</h3><p>Pollo en ají amarillo, tunta y papa.</p></div><div class="dish-bottom"><strong>Desde Bs 38</strong><button class="add-dish" data-add="Sajta de pollo">Agregar +</button></div></div>
+          </article>
+          <article class="dish-card" data-category="criollo" data-name="fricasé paceño" data-price="40" data-dish="Fricasé paceño">
+            <div class="dish-image"><img loading="lazy" src="assets/platos/fricase-paceno.webp" alt="Comida tradicional servida"><button class="heart-btn" aria-label="Agregar Fricasé paceño a favoritos" data-favorite="Fricasé paceño">♡</button></div>
+            <div class="dish-info"><div><h3>Fricasé paceño</h3><p>Caldo de cerdo, mote y chuño.</p></div><div class="dish-bottom"><strong>Desde Bs 40</strong><button class="add-dish" data-add="Fricasé paceño">Agregar +</button></div></div>
+          </article>
+          <article class="dish-card" data-category="tradicional" data-name="plato paceño" data-price="35" data-dish="Plato paceño">
+            <div class="dish-image"><img loading="lazy" src="assets/platos/plato-paceno.webp" alt="Plato con vegetales y guarniciones"><button class="heart-btn" aria-label="Agregar Plato paceño a favoritos" data-favorite="Plato paceño">♡</button></div>
+            <div class="dish-info"><div><h3>Plato paceño</h3><p>Choclo, haba, papa, queso y llajua.</p></div><div class="dish-bottom"><strong>Desde Bs 35</strong><button class="add-dish" data-add="Plato paceño">Agregar +</button></div></div>
+          </article>
+          <article class="dish-card" data-category="especial" data-name="pollo al horno" data-price="45" data-dish="Pollo al horno">
+            <div class="dish-image"><img loading="lazy" src="assets/platos/pollo-al-horno.webp" alt="Pollo horneado con guarnición"><span class="dish-tag">Para eventos</span><button class="heart-btn" aria-label="Agregar Pollo al horno a favoritos" data-favorite="Pollo al horno">♡</button></div>
+            <div class="dish-info"><div><h3>Pollo al horno</h3><p>Con guarniciones a elección.</p></div><div class="dish-bottom"><strong>Desde Bs 45</strong><button class="add-dish" data-add="Pollo al horno">Agregar +</button></div></div>
+          </article>
+          <article class="dish-card" data-category="especial" data-name="buffet mixto" data-price="65" data-dish="Buffet mixto">
+            <div class="dish-image"><img loading="lazy" src="assets/platos/buffet-criollo.webp" alt="Buffet para celebraciones"><button class="heart-btn" aria-label="Agregar Buffet mixto a favoritos" data-favorite="Buffet mixto">♡</button></div>
+            <div class="dish-info"><div><h3>Buffet mixto</h3><p>Selección de preparaciones para compartir.</p></div><div class="dish-bottom"><strong>Desde Bs 65</strong><button class="add-dish" data-add="Buffet mixto">Agregar +</button></div></div>
+          </article>
+          <article class="dish-card custom-card" data-category="especial" data-name="plato personalizado" data-price="0" data-dish="Plato personalizado">
+            <div class="custom-art">✳</div><div class="dish-info"><div><h3>¿Otro plato?</h3><p>Solicita una preparación especial fuera del catálogo.</p></div><div class="dish-bottom"><strong>A cotizar</strong><button class="add-dish" data-add="Plato personalizado">Solicitar +</button></div></div>
+          </article>
+        </div>
+        <p class="catalog-footnote">Precios referenciales por persona. El costo final depende del menú, cantidad de invitados, logística y fecha del evento.</p>
+      </section>
+
+      <section class="lower-strip" id="servicios">
+        <div class="service-intro"><span class="eyebrow">HECHO PARA TU OCASIÓN</span><h2>Nos encargamos del sabor.</h2><p>Menús coordinados para celebraciones privadas en La Paz.</p></div>
+        <div class="service-points"><span>✦ Cumpleaños</span><span>✦ Matrimonios</span><span>✦ Bautizos</span><span>✦ Eventos familiares</span><span>✦ Reuniones empresariales</span></div>
+        <button class="btn-primary compact" data-open-quote>Armar cotización <span>→</span></button>
+      </section>
+    </main>
+
+    <footer id="contacto"><span>© 2026 Jáuregui Catering & Eventos</span><span>Javier & Felipe Jáuregui · La Paz, Bolivia</span><button data-open-quote>Solicitar información ↗</button></footer>
+  </div>
+
+  <div class="floating-cart" id="floatingCart"><span class="cart-symbol">▣</span><span><strong id="cartCount">0 platos</strong><small>Tu selección</small></span><button id="openCart">Ver selección →</button></div>
+
+  <div class="modal-backdrop" id="quoteModal" aria-hidden="true">
+    <section class="modal-card quote-modal" role="dialog" aria-modal="true" aria-labelledby="quoteTitle">
+      <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
+      <span class="eyebrow">PLANIFIQUEMOS JUNTOS</span><h2 id="quoteTitle">Cotiza tu evento</h2>
+      <p class="modal-lead">Cuéntanos lo esencial y prepararemos una propuesta referencial.</p>
+      <form id="quoteForm">
+        <div class="form-grid">
+          <label>Nombre completo<input id="clientName" type="text" maxlength="70" placeholder="Tu nombre" required></label>
+          <label>Teléfono<input id="clientPhone" type="tel" maxlength="20" placeholder="Ej. 7XXXXXXX" required></label>
+          <label>Tipo de evento<select id="eventType" required><option value="">Selecciona</option><option>Cumpleaños</option><option>Matrimonio</option><option>Bautizo</option><option>Evento familiar</option><option>Evento empresarial</option><option>Otro</option></select></label>
+          <label>Fecha estimada<input id="eventDate" type="date" required></label>
+          <label>Tipo de menú<select id="menuVariant" required><option value="Menú tradicional">Menú tradicional</option><option value="Menú especial">Menú especial</option><option value="Menú mixto">Menú mixto</option><option value="Menú personalizado">Menú personalizado</option></select></label>
+          <label>Invitados<input id="guestCount" type="number" min="1" max="2000" value="30" required></label>
+          <label>Zona / lugar<input id="eventPlace" type="text" maxlength="100" placeholder="Zona de La Paz"></label>
+        </div>
+        <label>¿Qué necesitas?<textarea id="customRequest" rows="2" maxlength="500" placeholder="Platos, menú especial, servicio u otra solicitud..."></textarea></label>
+        <p class="form-note">Esta demostración no envía datos a un servidor. La solicitud se valida y registra localmente en la bitácora de esta página.</p>
+        <button class="btn-primary full" type="submit">Preparar solicitud <span>→</span></button>
+        <div id="formFeedback" class="feedback" aria-live="polite"></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="cartModal" aria-hidden="true">
+    <section class="modal-card cart-modal" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+      <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
+      <span class="eyebrow">TU PROPUESTA INICIAL</span><h2 id="cartTitle">Selección de platos</h2>
+      <div id="cartItems" class="cart-items"><p class="empty-cart">Todavía no agregaste platos.</p></div>
+      <div class="calculator">
+        <label for="calcGuests">Cantidad de invitados</label><input id="calcGuests" type="number" min="1" max="2000" value="30">
+        <label class="hours-label" for="serviceHours">Horas de servicio (Bs 40/hr)<input id="serviceHours" type="number" min="1" max="24" value="1"></label>
+        <div class="calc-total"><span>Total referencial</span><strong id="calcTotal">Bs 0</strong></div>
+        <small>Estimación: suma de precios por persona × invitados. No es un precio contractual.</small>
+      </div>
+      <button class="btn-primary full" id="confirmSelection">Continuar con cotización →</button>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="confirmModal" aria-hidden="true">
+    <section class="modal-card confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <span class="confirm-symbol">✓</span><h2 id="confirmTitle">Revisa tu solicitud</h2>
+      <p>La confirmación de demostración expira en:</p><strong class="countdown" id="countdown">30</strong><span class="countdown-label">SEGUNDOS</span>
+      <p class="confirm-summary" id="confirmSummary">Tu selección está lista.</p>
+      <div class="confirm-actions"><button class="btn-quiet" data-close-modal>Volver</button><button class="btn-primary" id="finishConfirm">Confirmar solicitud</button></div>
+    </section>
+  </div>
+
+  <aside class="audit-panel" id="auditPanel" aria-label="Bitácora de eventos">
+    <div class="audit-head"><span><i></i> BITÁCORA DE INTERACCIONES</span><button id="toggleAudit" aria-label="Contraer bitácora">−</button></div>
+    <div class="audit-body"><div class="audit-status">● Sistema activo · Eventos DOM / jQuery</div><div id="auditLog" aria-live="polite"><p class="audit-entry">[Sistema] Esperando interacciones...</p></div><button id="clearAudit" class="clear-audit">Limpiar registros</button></div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

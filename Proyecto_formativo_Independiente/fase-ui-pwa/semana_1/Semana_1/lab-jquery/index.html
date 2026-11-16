@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio jQuery | Jáuregui Catering</title>
+  <link rel="stylesheet" href="lab.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+  <script src="lab.js" defer></script>
+</head>
+<body>
+  <main class="lab-shell">
+    <header class="lab-header">
+      <a href="../index.html">← Volver al catálogo</a>
+      <span>PROYECTO FORMATIVO INDIVIDUAL · SEMANA 1</span>
+    </header>
+    <section class="lab-hero">
+      <p class="eyebrow">PRÁCTICA DE JQUERY Y COMPONENTES UI</p>
+      <h1>Laboratorio <em>jQuery</em></h1>
+      <p>Práctica independiente de efectos visuales, calculador de tarifas y modal expirable, adaptada al servicio de catering.</p>
+    </section>
+
+    <section class="lab-card">
+      <div class="section-kicker">JUEVES · EFECTOS VISUALES</div>
+      <button class="accordion-btn" type="button" aria-expanded="false">＋ Ver detalles del servicio</button>
+      <div class="accordion-panel">Incluye coordinación del menú, preparación gastronómica y organización del servicio para el evento. Los detalles se confirman según la solicitud del cliente.</div>
+      <div class="theme-area" id="themeArea">
+        <div class="theme-copy"><strong id="themeIcon">✦</strong><span id="themeName">Selecciona el tipo de celebración</span></div>
+        <div class="theme-buttons">
+          <button data-theme="cumple">Cumpleaños</button>
+          <button data-theme="matri">Matrimonio</button>
+          <button data-theme="empresa">Empresarial</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-card calculator-card">
+      <div class="section-kicker">VIERNES · CALCULADOR DE TARIFAS</div>
+      <h2>Calcula el servicio</h2>
+      <label for="hours">Horas de servicio <span>Bs 40 / hora</span></label>
+      <div class="hours-control">
+        <button type="button" id="minusHour" aria-label="Restar una hora">−</button>
+        <input id="hours" type="number" min="1" max="24" value="1">
+        <button type="button" id="plusHour" aria-label="Sumar una hora">+</button>
+      </div>
+      <div class="total-line"><span>Total a pagar</span><strong id="total">Bs 40</strong></div>
+      <button class="confirm-btn" id="openConfirm">Confirmar servicio →</button>
+      <small>Tarifa demostrativa de la práctica del laboratorio: Bs 40 por hora.</small>
+    </section>
+
+    <footer>Jáuregui Catering & Eventos · La Paz, Bolivia</footer>
+  </main>
+
+  <div class="modal-bg" id="confirmModal" aria-hidden="true">
+    <section class="confirm-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="close-modal" id="closeModal" aria-label="Cerrar">×</button>
+      <span class="check">✓</span>
+      <p class="eyebrow">CONFIRMACIÓN DE DEMOSTRACIÓN</p>
+      <h2 id="modalTitle">¿Confirmar servicio?</h2>
+      <p id="modalDetail">1 hora · Bs 40</p>
+      <div class="timer"><strong id="timer">30</strong><span>SEGUNDOS PARA CONFIRMAR</span></div>
+      <button class="confirm-btn" id="finish">Confirmar ahora</button>
+    </section>
+  </div>
+  <div class="lab-toast" id="labToast" role="status"></div>
+</body>
+</html>
