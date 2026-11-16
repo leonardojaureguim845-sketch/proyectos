@@ -11,17 +11,15 @@
   <script>
 (() => {
   "use strict";
-  const isMobileDevice = (() => {
-    const ua = navigator.userAgent || "";
-    const uaMobile = navigator.userAgentData && typeof navigator.userAgentData.mobile === "boolean"
-      ? navigator.userAgentData.mobile
-      : /Android|iPhone|iPod|Mobile|IEMobile|Opera Mini/i.test(ua);
-    return Boolean(uaMobile || window.matchMedia("(max-width: 767px)").matches);
-  })();
-
+  const ua = navigator.userAgent || "";
+  const isMobileDevice = Boolean(
+    (navigator.userAgentData && navigator.userAgentData.mobile) ||
+    /Android|iPhone|iPod|Mobile|IEMobile|Opera Mini/i.test(ua) ||
+    window.matchMedia("(max-width: 767px)").matches
+  );
   const currentFile = location.pathname.split("/").pop() || "index.html";
-  const targetFile = isMobileDevice ? "index-mobile.html" : "index.html";
-  const isMobilePage = currentFile === "index-mobile.html";
+  const isMobilePage = currentFile.toLowerCase() === "mobile.html";
+  const targetFile = isMobileDevice ? "mobile.html" : "index.html";
 
   if ((isMobileDevice && !isMobilePage) || (!isMobileDevice && isMobilePage)) {
     location.replace(new URL(targetFile + location.search + location.hash, location.href).href);
@@ -110,6 +108,4 @@ if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWork
 <script>
 if ("serviceWorker" in navigator) addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.error));
 </script>
-<button id="backToTop" class="back-top" type="button" aria-label="Volver al principio" title="Volver al principio">↑</button>
-<script>(()=>{const b=document.getElementById("backToTop");if(!b)return;const toggle=()=>b.classList.toggle("visible",window.scrollY>260);addEventListener("scroll",toggle,{passive:true});toggle();b.addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));})();</script>
 </body></html>

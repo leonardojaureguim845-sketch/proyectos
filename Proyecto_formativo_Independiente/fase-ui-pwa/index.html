@@ -18,151 +18,17 @@
 </script>
   <script src="script.js" defer></script>
   <script>
-
 (() => {
   "use strict";
-  const byId = id => document.getElementById(id);
-  const stage = byId("hydrationStage");
-  if (!stage) return;
-
-  // 1. Hidratación simulada: HTML visible primero, listeners después.
-  const hydrate = () => {
-    if (stage.dataset.hidratado === "true") return;
-    stage.dataset.hidratado = "true";
-    byId("hydrationLabel").textContent = "☰ Menú interactivo (hidratado)";
-    byId("hydrateButton").textContent = "Interfaz hidratada ✓";
-    byId("hydrationMenu").hidden = false;
-    byId("hydrationResult").textContent = "Estado: hidratado. Los eventos se conectaron al DOM existente.";
-    byId("hydrateButton").disabled = true;
-  };
-  byId("hydrateButton").addEventListener("click", hydrate);
-
-  // 2. Demo de memoria: un único listener delegado y un único intervalo, ambos limpiables.
-  let demoTimer = null, demoListener = null, listenerCount = 0, ticks = 0;
-  const updateMemory = () => {
-    byId("memoryResult").textContent = `Listeners de demo: ${listenerCount} · Temporizador: ${demoTimer ? "activo" : "detenido"} · Pulsos: ${ticks}`;
-  };
-  byId("startLeakDemo").addEventListener("click", () => {
-    if (!demoListener) {
-      demoListener = () => { ticks++; updateMemory(); };
-      document.addEventListener("week2-demo-pulse", demoListener);
-      listenerCount = 1;
-    }
-    if (!demoTimer) demoTimer = setInterval(() => document.dispatchEvent(new Event("week2-demo-pulse")), 1000);
-    updateMemory();
-  });
-  byId("stopLeakDemo").addEventListener("click", () => {
-    if (demoListener) document.removeEventListener("week2-demo-pulse", demoListener);
-    if (demoTimer) clearInterval(demoTimer);
-    demoListener = null; demoTimer = null; listenerCount = 0; ticks = 0;
-    updateMemory();
-  });
-
-  // 3. Salida segura: textContent evita interpretar HTML introducido por el usuario.
-  byId("testXss").addEventListener("click", () => {
-    byId("xssOutput").textContent = byId("xssInput").value || "No escribiste ningún texto.";
-  });
-
-  // 4. Fetch con validación response.ok y renderizado seguro.
-  async function loadSongs() {
-    const result = byId("fetchResult");
-    result.textContent = "Cargando datos…";
-    try {
-      const response = await fetch("./data/canciones.json");
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const list = await response.json();
-      result.textContent = `Fetch correcto: ${list.length} canciones recibidas desde JSON.`;
-      renderSongCatalog(list);
-      return list;
-    } catch (error) {
-      result.textContent = "No se pudo cargar el JSON. Comprueba que uses Live Server o HTTPS.";
-      console.error(error);
-      return [];
-    }
-  }
-  byId("reloadAsyncCatalog").addEventListener("click", loadSongs);
-
-  // 5. Estado PWA y registro de SW.
-  function updateNetwork() {
-    const online = navigator.onLine;
-    byId("pwaDemoStatus").textContent = online ? "🟢 EN LÍNEA · Conexión disponible" : "🟠 OFFLINE · Se usa la caché local";
-  }
-  window.addEventListener("online", updateNetwork);
-  window.addEventListener("offline", updateNetwork);
-  updateNetwork();
-  byId("checkPwa").addEventListener("click", async () => {
-    const out = byId("pwaResult");
-    if (!("serviceWorker" in navigator)) { out.textContent = "Este navegador no ofrece Service Worker."; return; }
-    const registration = await navigator.serviceWorker.getRegistration();
-    out.textContent = registration ? `Service Worker activo: ${registration.scope}` : "Service Worker aún no registrado. Abre la app mediante HTTPS o localhost.";
-  });
-
-  // 6. Datos de viewport para que el estudiante pruebe distintos tamaños.
-  const updateViewport = () => byId("viewportResult").textContent = `Viewport actual: ${window.innerWidth} × ${window.innerHeight} px`;
-  window.addEventListener("resize", updateViewport);
-  updateViewport();
-
-  // 7. Lista karaoke/eventos: carga de 15 pistas desde JSON, filtro, append y delegación .off().on().
-  let allSongs = [], queue = [];
-  const catalog = byId("songCatalog"), queueBox = byId("songQueue");
-  function renderSongCatalog(list) {
-    allSongs = list;
-    const query = byId("songSearch").value.trim().toLocaleLowerCase("es");
-    catalog.replaceChildren();
-    list.filter(song => `${song.titulo} ${song.artista} ${song.genero}`.toLocaleLowerCase("es").includes(query)).forEach(song => {
-      const row = document.createElement("div"); row.className = "song-row";
-      const title = document.createElement("span"); title.className = "song-title";
-      title.textContent = `${song.titulo} — ${song.artista}`;
-      const add = document.createElement("button"); add.type = "button"; add.textContent = "+";
-      add.setAttribute("aria-label", `Añadir ${song.titulo}`); add.dataset.addSong = String(song.id);
-      row.append(title, add); catalog.append(row);
-    });
-    if (!catalog.children.length) catalog.textContent = "No se encontraron canciones.";
-  }
-  function renderQueue() {
-    queueBox.replaceChildren();
-    if (!queue.length) { const p = document.createElement("p"); p.textContent = "Aún no agregaste canciones."; queueBox.append(p); return; }
-    queue.forEach((song,index) => {
-      const row=document.createElement("div"); row.className="song-row";
-      const title=document.createElement("span"); title.className="song-title"; title.textContent=`${song.titulo} — ${song.artista}`;
-      const remove=document.createElement("button"); remove.type="button"; remove.textContent="×"; remove.dataset.removeSong=String(index); remove.setAttribute("aria-label","Quitar canción");
-      row.append(title,remove); queueBox.append(row);
-    });
-  }
-  // Delegación con .off().on() equivalente en JS nativo: se instala una sola vez en los contenedores estables.
-  catalog.addEventListener("click", event => {
-    const button=event.target.closest("[data-add-song]"); if(!button)return;
-    const song=allSongs.find(item=>item.id===Number(button.dataset.addSong));
-    if(song){queue.push(song);renderQueue();byId("songResult").textContent=`Añadida: ${song.titulo}`;}
-  });
-  queueBox.addEventListener("click", event => {
-    const button=event.target.closest("[data-remove-song]"); if(!button)return;
-    queue.splice(Number(button.dataset.removeSong),1);renderQueue();
-  });
-  byId("songSearch").addEventListener("input",()=>renderSongCatalog(allSongs));
-  byId("addSongRequest").addEventListener("click",()=>{
-    const title=byId("songRequest").value.trim(); if(!title)return;
-    queue.push({titulo:title,artista:"Solicitud personalizada",genero:"Evento"});
-    byId("songRequest").value="";renderQueue();byId("songResult").textContent="Solicitud añadida de forma segura.";
-  });
-  loadSongs();
-})();
-
-</script>
-  <script>
-(() => {
-  "use strict";
-  const isMobileDevice = (() => {
-    const ua = navigator.userAgent || "";
-    const uaMobile = navigator.userAgentData && typeof navigator.userAgentData.mobile === "boolean"
-      ? navigator.userAgentData.mobile
-      : /Android|iPhone|iPod|Mobile|IEMobile|Opera Mini/i.test(ua);
-    return Boolean(uaMobile || window.matchMedia("(max-width: 767px)").matches);
-  })();
-
+  const ua = navigator.userAgent || "";
+  const isMobileDevice = Boolean(
+    (navigator.userAgentData && navigator.userAgentData.mobile) ||
+    /Android|iPhone|iPod|Mobile|IEMobile|Opera Mini/i.test(ua) ||
+    window.matchMedia("(max-width: 767px)").matches
+  );
   const currentFile = location.pathname.split("/").pop() || "index.html";
-  const targetFile = isMobileDevice ? "index-mobile.html" : "index.html";
-  const isMobilePage = currentFile === "index-mobile.html";
+  const isMobilePage = currentFile.toLowerCase() === "mobile.html";
+  const targetFile = isMobileDevice ? "mobile.html" : "index.html";
 
   if ((isMobileDevice && !isMobilePage) || (!isMobileDevice && isMobilePage)) {
     location.replace(new URL(targetFile + location.search + location.hash, location.href).href);
@@ -185,7 +51,6 @@
         <a href="#servicios" class="nav-link">Servicios</a>
         <a href="#contacto" class="nav-link">Contacto</a>
       </nav>
-      <button class="home-return" id="homeReturn" type="button" aria-label="Volver a Inicio" title="Volver a Inicio">⌂ <span>Inicio</span></button>
       <div class="top-actions">
         <button class="icon-btn" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">◐</button>
         <button class="quote-top" data-open-quote>Solicitar cotización <span>↗</span></button>
@@ -193,8 +58,8 @@
     <span id="pwaNetworkStatus" class="pwa-network-status" role="status">● Comprobando conexión</span>
       </header>
 
-    <main id="appScreens">
-      <section class="hero app-screen active" id="inicio" data-screen="inicio">
+    <main id="inicio">
+      <section class="hero">
         <div class="hero-copy">
           <span class="eyebrow"><i></i> SABORES QUE REÚNEN</span>
           <h1>Tu celebración,<br><em>con sabor</em> inolvidable.</h1>
@@ -213,7 +78,7 @@
       </section>
 
 
-      <section class="week2-lab app-screen" id="laboratorio" data-screen="laboratorio">
+      <section class="week2-lab" id="laboratorio">
         <div class="week2-heading">
           <span class="eyebrow">PROYECTO FORMATIVO INDIVIDUAL · SEMANA 2</span>
           <h2>Laboratorio interactivo</h2>
@@ -302,7 +167,7 @@
         </article>
       </section>
 
-      <section class="catalog-section app-screen" id="catalogo" data-screen="catalogo">
+      <section class="catalog-section" id="catalogo">
         <div class="section-heading">
           <div><span class="eyebrow">NUESTRO CATÁLOGO</span><h2>Platos para compartir</h2></div>
           <div class="catalog-tools">
@@ -368,15 +233,14 @@
         <p class="catalog-footnote">Precios referenciales por persona. El costo final depende del menú, cantidad de invitados, logística y fecha del evento.</p>
       </section>
 
-      <section class="lower-strip app-screen" id="servicios" data-screen="servicios">
+      <section class="lower-strip" id="servicios">
         <div class="service-intro"><span class="eyebrow">HECHO PARA TU OCASIÓN</span><h2>Nos encargamos del sabor.</h2><p>Menús coordinados para celebraciones privadas en La Paz.</p></div>
         <div class="service-points"><span>✦ Cumpleaños</span><span>✦ Matrimonios</span><span>✦ Bautizos</span><span>✦ Eventos familiares</span><span>✦ Reuniones empresariales</span></div>
         <button class="btn-primary compact" data-open-quote>Armar cotización <span>→</span></button>
       </section>
-
-
-    <footer id="contacto" class="app-screen contact-screen" data-screen="contacto"><span>© 2026 Jáuregui Catering & Eventos</span><span>Javier & Felipe Jáuregui · La Paz, Bolivia</span><button data-open-quote>Solicitar información ↗</button></footer>
     </main>
+
+    <footer id="contacto"><span>© 2026 Jáuregui Catering & Eventos</span><span>Javier & Felipe Jáuregui · La Paz, Bolivia</span><button data-open-quote>Solicitar información ↗</button></footer>
   </div>
 
   <div class="floating-cart" id="floatingCart"><span class="cart-symbol">▣</span><span><strong id="cartCount">0 platos</strong><small>Tu selección</small></span><button id="openCart">Ver selección →</button></div>
@@ -432,7 +296,6 @@
     <div class="audit-head"><span><i></i> BITÁCORA DE INTERACCIONES</span><button id="toggleAudit" aria-label="Contraer bitácora">−</button></div>
     <div class="audit-body"><div class="audit-status">● Sistema activo · Eventos DOM / jQuery</div><div id="auditLog" aria-live="polite"><p class="audit-entry">[Sistema] Esperando interacciones...</p></div><button id="clearAudit" class="clear-audit">Limpiar registros</button></div>
   </aside>
-
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
